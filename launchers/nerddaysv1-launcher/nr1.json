@@ -1,0 +1,7 @@
+{
+    "schemaType": "LAUNCHER",
+    "id": "nerddaysv1-launcher",
+    "displayName": "Nerddaysv1Launcher",
+    "description": "Describe me",
+    "rootNerdletId": "nerddaysv1-nerdlet"
+}
