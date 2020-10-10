@@ -1,6 +1,6 @@
 {
-    "schemaType": "NERDLET",
-    "id": "nerddaysv1-nerdlet",
-    "displayName": "Nerddaysv1Nerdlet",
-    "description": ""
+  "schemaType": "NERDLET",
+  "id": "nerddaysv1-nerdlet",
+  "displayName": "Nerddaysv1",
+  "description": "A demo app for 3rd Party Secrets"
 }

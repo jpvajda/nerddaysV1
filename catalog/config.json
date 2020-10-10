@@ -1,0 +1,17 @@
+{
+  "tagline": "3rd Party Secrets Demo App",
+  "details": "This application is used to demo the 3rd party secrets functionality for NerdDays.",
+  "repository": "https://github.com/jpvajda/nerddaysV1",
+  "whatsNew": "Now you can submit a secret\n Now you can query a secret\nNow you can retrieve all keys",
+  "support": {
+    "email": {
+      "address": "jvajda@newrelic.com"
+    },
+    "issues": {
+      "url": "https://github.com/jpvajda/nerddaysV1/issues"
+    },
+    "community": {
+      "url": ""
+    }
+  }
+}
