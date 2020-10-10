@@ -2,7 +2,7 @@
 
 ## Getting started
 
-Check out the [Prereqs](https://github.com/newrelic-experimental/nerd-days-v1/tree/main/third-party-secrets)for more information on getting started!
+Check out the [Prereqs](https://github.com/newrelic-experimental/nerd-days-v1/tree/main/third-party-secrets) for more information on getting started!
 
 Run the following scripts:
 
