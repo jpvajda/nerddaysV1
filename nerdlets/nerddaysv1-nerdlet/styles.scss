@@ -1,5 +1,10 @@
 @import "~@newrelic/nr1-community/dist/index.css";
 
+.container {
+  display: grid;
+  place-items: center;
+}
+
 .primary-grid {
   grid-gap: 0;
   overflow: hidden;
@@ -25,4 +30,8 @@
     0 1px 3px 1px rgba(0, 134, 148, 0.03), 0 3px 0 0 rgba(0, 49, 54, 0.04),
     0 1px 0 0 rgba(0, 75, 82, 0.04);
   position: relative;
+}
+
+.button {
+  display: inline-block;
 }

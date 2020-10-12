@@ -57,14 +57,15 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
 
     return (
       // A Set of components containing the application functionality.
+      // https://developer.newrelic.com/explore-docs/intro-to-sdk
       <Grid
         className="primary-grid"
         spacingType={[Grid.SPACING_TYPE.NONE, Grid.SPACING_TYPE.NONE]}
       >
         <GridItem className="primary-content-container" columnSpan={12}>
-          <main className="primary-content full-height">
+          <main className="primary-content full-height container">
             <div className="secrets">
-              <Stack verticalType={Stack.VERTICAL_TYPE.CENTER}>
+              <Stack verticalType={Stack.VERTICAL_TYPE.TOP}>
                 <StackItem>
                   <div className="title"></div>
                   ADD A SECRET
@@ -90,7 +91,14 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                       />
                     </CardBody>
                     {/* A function that saves the secret to NerdVault */}
-                    <Button onClick={() => this.writeSecret()} type="primary">
+                    <Button
+                      className="button"
+                      onClick={() => this.writeSecret()}
+                      type={Button.TYPE.PRIMARY}
+                      iconType={
+                        Button.ICON_TYPE.DOCUMENTS__DOCUMENTS__FILE__A_ADD
+                      }
+                    >
                       Save
                     </Button>
                   </Card>
@@ -136,8 +144,9 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                               <>
                                 <pre>{JSON.stringify(secret, null, 2)}</pre>
                                 <Button
+                                  className="button"
                                   onClick={() => this.deleteSecret(secret.name)}
-                                  type="primary"
+                                  type={Button.TYPE.PRIMARY}
                                 >
                                   Delete
                                 </Button>
@@ -146,7 +155,12 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                           });
                         }}
                       </UserSecretsQuery>
-                      <Button onClick={() => this.setState()} type="primary">
+                      <Button
+                        className="button"
+                        onClick={() => this.setState()}
+                        type={Button.TYPE.PRIMARY}
+                        iconType={Button.ICON_TYPE.INTERFACE__OPERATIONS__UNDO}
+                      >
                         Refresh
                       </Button>
                     </CardBody>
