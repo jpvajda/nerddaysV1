@@ -1,5 +1,4 @@
 import React from "react";
-import "./app.css";
 
 import {
   Card,
@@ -28,7 +27,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
   async deleteSecret(key) {
     const mutation = {
       actionType: UserSecretsMutation.ACTION_TYPE.DELETE_SECRET,
-      key: key,
+      name: key,
     };
     await UserSecretsMutation.mutate(mutation);
   }
@@ -39,7 +38,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
     // Put together parameters
     const mutation = {
       actionType: UserSecretsMutation.ACTION_TYPE.WRITE_SECRET, // Allows you to toggle WRITE/DELETE actions utilizing the same component
-      key: secretName,
+      name: secretName,
       value: secretValue,
     };
 
@@ -132,7 +131,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                           <>
                             <pre>{JSON.stringify(secret, null, 2)}</pre>
                             <Button
-                              onClick={() => this.deleteSecret(secret.key)}
+                              onClick={() => this.deleteSecret(secret.name)}
                               type="primary"
                             >
                               Delete
