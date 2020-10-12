@@ -4,8 +4,11 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Grid,
+  GridItem,
   TextField,
   Button,
+  Spinner,
   Stack,
   StackItem,
 } from "nr1";
@@ -16,11 +19,11 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
     super(props);
     this.state = {
       //  Inputs for writing keys
-      secretName: null,
-      secretValue: null,
+      secretName: '',
+      secretValue: '',
 
       // Input for finding a single key
-      userSecretsQueryKey: null,
+      userSecretsQueryKey: '',
     };
   }
 
@@ -53,103 +56,108 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
     const { secretName, secretValue, userSecretsQueryKey } = this.state;
 
     return (
-      <>
-        {/* A StackItem containing the secret inputs and save functionality*/}
+      <Grid
+          className="primary-grid"
+          spacingType={[Grid.SPACING_TYPE.NONE, Grid.SPACING_TYPE.NONE]}
+      >
+        <GridItem className="primary-content-container" columnSpan={12}>
+            <main className="primary-content full-height">
+              {/* A StackItem containing the secret inputs and save functionality*/}
+              <div className="secrets">
+                <Stack verticalType={Stack.VERTICAL_TYPE.FILL_EVENLY}>
+                <StackItem>
+                  <div className="title"></div>
+                  ADD A SECRET
+                  <Card>
+                    <CardBody>
+                      <TextField
+                        autofocus
+                        label="Secret Name"
+                        placeholder="enter secret name"
+                        onChange={({ target }) => {
+                          this.setState({ secretName: target.value });
+                        }}
+                        value={secretName}
+                      />
+                      <TextField
+                        autofocus
+                        label="Secret Value"
+                        placeholder="enter secret"
+                        onChange={({ target }) => {
+                          this.setState({ secretValue: target.value });
+                        }}
+                        value={secretValue}
+                      />
+                    </CardBody>
 
-        <div className="secrets">
-          <Stack verticalType={Stack.VERTICAL_TYPE.FILL_EVENLY}>
-            <StackItem>
-              <div className="title"></div>
-              ADD A SECRET
-              <Card>
-                <CardHeader />
-                <CardBody>
-                  <TextField
-                    autofocus
-                    label="Secret Name"
-                    placeholder="enter secret name"
-                    onChange={({ target }) => {
-                      this.setState({ secretName: target.value });
-                    }}
-                    value={secretName}
-                  />
-                  <TextField
-                    autofocus
-                    label="Secret Value"
-                    placeholder="enter secret"
-                    onChange={({ target }) => {
-                      this.setState({ secretValue: target.value });
-                    }}
-                    value={secretValue}
-                  />
-                </CardBody>
+                    {/* A trigger function that calls UserSecretsMutation component and saves secret to NerdVault */}
+                    <Button onClick={() => this.writeSecret()} type="primary">
+                      Save
+                    </Button>
+                  </Card>
+                </StackItem>
+                <StackItem>
+                  {/* Grid for showing a Single Key */}
+                  <div className="title"></div>
+                  QUERY
+                  <Card>
+                    <CardBody>
+                      <TextField
+                        autofocus
+                        label="Retrieve by name"
+                        placeholder="enter secret name"
+                        onChange={({ target }) => {
+                          this.setState({ userSecretsQueryKey: target.value });
+                        }}
+                        value={userSecretsQueryKey}
+                      />
 
-                {/* A trigger function that calls UserSecretsMutation component and saves secret to NerdVault */}
-                <Button onClick={() => this.writeSecret()} type="primary">
-                  Save
-                </Button>
-              </Card>
-            </StackItem>
-            <StackItem>
-              {/* Grid for showing a Single Key */}
-              <div className="title"></div>
-              QUERY
-              <Card>
-                <CardHeader />
-                <CardBody>
-                  <TextField
-                    autofocus
-                    label="Retrieve by name"
-                    placeholder="enter secret name"
-                    onChange={({ target }) => {
-                      this.setState({ userSecretsQueryKey: target.value });
-                    }}
-                  />
+                      {userSecretsQueryKey && (
+                        <UserSecretsQuery key={userSecretsQueryKey}>
+                          {(data) => <pre>{JSON.stringify(data, null, 2)}</pre>}
+                        </UserSecretsQuery>
+                      )}
+                    </CardBody>
+                  </Card>
+                </StackItem>
+                <StackItem>
+                {/* Retrieve All User Keys */}
+                <div className="title"></div>
+                RETRIEVE
+                <Card>
+                  <CardBody>
+                    <UserSecretsQuery>
+                      {({ data, loading }) => {
+                        if (loading) {
+                          return <Spinner />
+                        }
 
-                  {userSecretsQueryKey && (
-                    <UserSecretsQuery key={userSecretsQueryKey}>
-                      {(data) => <pre>{JSON.stringify(data, null, 2)}</pre>}
+                        return data.map((secret) => {
+                          return (
+                            <>
+                              <pre>{JSON.stringify(secret, null, 2)}</pre>
+                              <Button
+                                onClick={() => this.deleteSecret(secret.name)}
+                                type="primary"
+                              >
+                                Delete
+                              </Button>
+                            </>
+                          );
+                        });
+                      }}
                     </UserSecretsQuery>
-                  )}
-                </CardBody>
-              </Card>
-            </StackItem>
-            <StackItem>
-              {/* Retrieve All User Keys */}
-              <div className="title"></div>
-              RETRIEVE
-              <Card>
-                <CardHeader />
-                <CardBody>
-                  <UserSecretsQuery>
-                    {({ data }) => {
-                      if (!data) {
-                        return <h3>No secrets found</h3>;
-                      }
-                      return data.map((secret) => {
-                        return (
-                          <>
-                            <pre>{JSON.stringify(secret, null, 2)}</pre>
-                            <Button
-                              onClick={() => this.deleteSecret(secret.name)}
-                              type="primary"
-                            >
-                              Delete
-                            </Button>
-                          </>
-                        );
-                      });
-                    }}
-                  </UserSecretsQuery>
-                  <Button onClick={() => this.setState()} type="primary">
-                    Refresh
-                  </Button>
-                </CardBody>
-              </Card>
-            </StackItem>
-          </Stack>
-        </div>
-      </>
+                    <Button onClick={() => this.setState()} type="primary">
+                      Refresh
+                    </Button>
+                  </CardBody>
+                </Card>
+              </StackItem>
+            </Stack>
+              </div>
+            </main>
+        </GridItem>
+      </Grid>
     );
   }
 }
