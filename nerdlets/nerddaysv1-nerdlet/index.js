@@ -1,3 +1,6 @@
+// SAMPLE APP REPO: https://github.com/jpvajda/nerddaysV1
+// PRE-REQ: https://github.com/newrelic-experimental/nerd-days-v1/tree/main/open-source-track/third-party-secrets
+// add in additional comments to align with UI elements.
 import React from "react";
 
 import {
