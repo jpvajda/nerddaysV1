@@ -18,12 +18,12 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //  Inputs for writing keys
-      secretName: '',
-      secretValue: '',
+      // Local component state for storing the values from these input fields.
+      secretName: "",
+      secretValue: "",
 
-      // Input for finding a single key
-      userSecretsQueryKey: '',
+      // Local component state for storing the values from these input fields.
+      userSecretsQueryKey: "",
     };
   }
 
@@ -38,17 +38,17 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
   async writeSecret() {
     const { secretName, secretValue } = this.state;
 
-    // Put together parameters
+    // Options for the mutate method.
     const mutation = {
-      actionType: UserSecretsMutation.ACTION_TYPE.WRITE_SECRET, // Allows you to toggle WRITE/DELETE actions utilizing the same component
+      actionType: UserSecretsMutation.ACTION_TYPE.WRITE_SECRET, // Allows you to toggle WRITE/DELETE.
       name: secretName,
       value: secretValue,
     };
 
-    // Save to NerdVault
+    // Run the graphql mutation using the input to save the secret.
     await UserSecretsMutation.mutate(mutation);
 
-    // Reset input fields
+    // Reset state for input fields after submission.
     this.setState({ secretName: null, secretValue: null });
   }
 
@@ -56,15 +56,16 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
     const { secretName, secretValue, userSecretsQueryKey } = this.state;
 
     return (
+      // A Set of components containing the application functionality.
+      // https://developer.newrelic.com/explore-docs/intro-to-sdk
       <Grid
-          className="primary-grid"
-          spacingType={[Grid.SPACING_TYPE.NONE, Grid.SPACING_TYPE.NONE]}
+        className="primary-grid"
+        spacingType={[Grid.SPACING_TYPE.NONE, Grid.SPACING_TYPE.NONE]}
       >
         <GridItem className="primary-content-container" columnSpan={12}>
-            <main className="primary-content full-height">
-              {/* A StackItem containing the secret inputs and save functionality*/}
-              <div className="secrets">
-                <Stack verticalType={Stack.VERTICAL_TYPE.FILL_EVENLY}>
+          <main className="primary-content full-height container">
+            <div className="secrets">
+              <Stack verticalType={Stack.VERTICAL_TYPE.TOP}>
                 <StackItem>
                   <div className="title"></div>
                   ADD A SECRET
@@ -89,17 +90,23 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                         value={secretValue}
                       />
                     </CardBody>
-
-                    {/* A trigger function that calls UserSecretsMutation component and saves secret to NerdVault */}
-                    <Button onClick={() => this.writeSecret()} type="primary">
+                    {/* A function that saves the secret to NerdVault */}
+                    <Button
+                      className="button"
+                      onClick={() => this.writeSecret()}
+                      type={Button.TYPE.PRIMARY}
+                      iconType={
+                        Button.ICON_TYPE.DOCUMENTS__DOCUMENTS__FILE__A_ADD
+                      }
+                    >
                       Save
                     </Button>
                   </Card>
                 </StackItem>
                 <StackItem>
-                  {/* Grid for showing a Single Key */}
+                  {/* Fetch for returning single key */}
                   <div className="title"></div>
-                  QUERY
+                  FETCH ONE
                   <Card>
                     <CardBody>
                       <TextField
@@ -121,41 +128,47 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                   </Card>
                 </StackItem>
                 <StackItem>
-                {/* Retrieve All User Keys */}
-                <div className="title"></div>
-                RETRIEVE
-                <Card>
-                  <CardBody>
-                    <UserSecretsQuery>
-                      {({ data, loading }) => {
-                        if (loading) {
-                          return <Spinner />
-                        }
+                  {/* Fetch All User Keys */}
+                  <div className="title"></div>
+                  FETCH ALL
+                  <Card>
+                    <CardBody>
+                      <UserSecretsQuery>
+                        {({ data, loading }) => {
+                          if (loading) {
+                            return <Spinner />;
+                          }
 
-                        return data.map((secret) => {
-                          return (
-                            <>
-                              <pre>{JSON.stringify(secret, null, 2)}</pre>
-                              <Button
-                                onClick={() => this.deleteSecret(secret.name)}
-                                type="primary"
-                              >
-                                Delete
-                              </Button>
-                            </>
-                          );
-                        });
-                      }}
-                    </UserSecretsQuery>
-                    <Button onClick={() => this.setState()} type="primary">
-                      Refresh
-                    </Button>
-                  </CardBody>
-                </Card>
-              </StackItem>
-            </Stack>
-              </div>
-            </main>
+                          return data.map((secret) => {
+                            return (
+                              <>
+                                <pre>{JSON.stringify(secret, null, 2)}</pre>
+                                <Button
+                                  className="button"
+                                  onClick={() => this.deleteSecret(secret.name)}
+                                  type={Button.TYPE.PRIMARY}
+                                >
+                                  Delete
+                                </Button>
+                              </>
+                            );
+                          });
+                        }}
+                      </UserSecretsQuery>
+                      <Button
+                        className="button"
+                        onClick={() => this.setState()}
+                        type={Button.TYPE.PRIMARY}
+                        iconType={Button.ICON_TYPE.INTERFACE__OPERATIONS__UNDO}
+                      >
+                        Refresh
+                      </Button>
+                    </CardBody>
+                  </Card>
+                </StackItem>
+              </Stack>
+            </div>
+          </main>
         </GridItem>
       </Grid>
     );

@@ -1,142 +1,9 @@
 @import "~@newrelic/nr1-community/dist/index.css";
 
-// .column {
-//   background-color: white;
-//   margin-left: 4px;
-//   padding: 6px;
-// }
-
-// .summary-panel {
-//   border-bottom: 2px #eeeeee solid;
-//   padding: 4px 8px;
-
-//   &__child-processes {
-//     flex-wrap: wrap;
-//   }
-// }
-
-// .subtitle {
-//   margin-top: -12px;
-//   margin-bottom: 10px;
-//   color: #aaaaaa;
-// }
-
-// h1 {
-//   margin-bottom: 8px;
-//   font-size: 21px;
-//   font-weight: 400;
-// }
-
-// table.process-table {
-//   width: 100%;
-//   font-size: 14px;
-
-//   thead {
-//     background-color: #222222;
-//     color: white;
-
-//     th {
-//       padding-left: 2px;
-//       padding-right: 2px;
-//       text-align: center;
-
-//       &:hover {
-//         cursor: pointer;
-//       }
-//     }
-
-//     .selected {
-//       background-color: #222222;
-//       color: white;
-//     }
-//   }
-
-//   tbody {
-//     font-family: "Courier New", Courier, monospace;
-//     cursor: pointer;
-
-//     tr:nth-child(even) {
-//       background-color: #f4f4f4;
-//     }
-
-//     tr:hover {
-//       background-color: azure;
-//     }
-
-//     tr.selected {
-//       border: 1px solid #b3e2ff;
-//       padding: -1px;
-
-//       td {
-//         background-color: #e9f4fb;
-//       }
-//     }
-
-//     td {
-//       padding-left: 2px;
-//       padding-right: 2px;
-//       font-size: 16px;
-//     }
-//   }
-
-//   .left {
-//     text-align: left;
-//   }
-//   .right {
-//     text-align: right;
-//   }
-//   .center {
-//     text-align: center;
-//   }
-// }
-
-// .empty-state-container {
-//   height: 100%;
-//   background-color: #fff;
-// }
-
-// [class*="style_empty-state"] {
-//   height: calc(100% - (32px));
-// }
-
-// .process-details {
-//   padding-right: 8px;
-
-//   .chart {
-//     height: 180px;
-//     width: 100%;
-//   }
-
-//   & > [class*="wnd-Stack"] {
-//     height: 100%;
-//     overflow: hidden;
-//   }
-// }
-
-// .process-details-main {
-//   &:last-child {
-//     margin-bottom: 20px;
-//   }
-// }
-
-// .primary-grid {
-//   height: 100%;
-//   overflow: hidden;
-// }
-
-// .primary-column {
-//   overflow: auto !important;
-// }
-
-// .secondary-column {
-//   overflow-y: auto !important;
-// }
-
-// .primary-column-main {
-//   &:last-child {
-//     margin-bottom: 20px;
-//   }
-// }
+.container {
+  display: grid;
+  place-items: center;
+}
 
 .primary-grid {
   grid-gap: 0;
@@ -148,7 +15,7 @@
 .primary-content-container {
   overflow: scroll;
   padding: 16px;
-  
+
   &:first-child {
     padding-right: 0px;
   }
@@ -163,4 +30,8 @@
     0 1px 3px 1px rgba(0, 134, 148, 0.03), 0 3px 0 0 rgba(0, 49, 54, 0.04),
     0 1px 0 0 rgba(0, 75, 82, 0.04);
   position: relative;
+}
+
+.button {
+  display: inline-block;
 }
