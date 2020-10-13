@@ -21,17 +21,20 @@ import { UserSecretsMutation, UserSecretsQuery } from "@newrelic/nr1-community";
 // Utility function for hiding secret value in UI
 const hideSecret = (data) => {
   const { value } = data;
-                            
-  const lengthVisible = value.length >= 7 ? 5 : (value.length - 2);
+
+  const lengthVisible = value.length >= 7 ? 5 : value.length - 2;
   const replacementLength = value.length - lengthVisible;
-  const regex = new RegExp('^.{' + replacementLength + '}', 'g');
-  const replacementValue = value.replace(regex, Array(replacementLength).join('*'));
+  const regex = new RegExp("^.{" + replacementLength + "}", "g");
+  const replacementValue = value.replace(
+    regex,
+    Array(replacementLength).join("*")
+  );
 
   return {
     ...data,
-    value: replacementValue
+    value: replacementValue,
   };
-}
+};
 
 export default class Nerddaysv1NerdletNerdlet extends React.Component {
   constructor(props) {
@@ -48,10 +51,11 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
       requery: Date.now(),
 
       // Toggle Visibility of secrets
-      hideSecrets: false
+      hideSecrets: false,
     };
   }
 
+  // delete secret function
   async deleteSecret(key) {
     const mutation = {
       actionType: UserSecretsMutation.ACTION_TYPE.DELETE_SECRET,
@@ -61,12 +65,12 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
     this.setState({ requery: Date.now() });
   }
 
+  // write secret function
   async writeSecret() {
     const { secretName, secretValue } = this.state;
 
-    // Options for the mutate method.
     const mutation = {
-      actionType: UserSecretsMutation.ACTION_TYPE.WRITE_SECRET, // Allows you to toggle WRITE/DELETE.
+      actionType: UserSecretsMutation.ACTION_TYPE.WRITE_SECRET,
       name: secretName,
       value: secretValue,
     };
@@ -79,7 +83,13 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
   }
 
   render() {
-    const { hideSecrets, secretName, secretValue, requery, userSecretsQueryKey } = this.state;
+    const {
+      hideSecrets,
+      secretName,
+      secretValue,
+      requery,
+      userSecretsQueryKey,
+    } = this.state;
 
     return (
       // A Set of components containing the application functionality.
@@ -97,6 +107,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                   ADD A SECRET
                   <Card>
                     <CardBody>
+                      {/* secret name field */}
                       <TextField
                         autofocus
                         label="Secret Name"
@@ -104,8 +115,9 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                         onChange={({ target }) => {
                           this.setState({ secretName: target.value });
                         }}
-                        value={secretName || ''}
+                        value={secretName || ""}
                       />
+                      {/* secret value field */}
                       <TextField
                         autofocus
                         label="Secret Value"
@@ -113,10 +125,10 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                         onChange={({ target }) => {
                           this.setState({ secretValue: target.value });
                         }}
-                        value={secretValue || ''}
+                        value={secretValue || ""}
                       />
                     </CardBody>
-                    {/* A function that saves the secret to NerdVault */}
+                    {/* saves the secret to NerdVault */}
                     <Button
                       className="button"
                       onClick={() => this.writeSecret()}
@@ -127,13 +139,22 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                     >
                       Save
                     </Button>
+                    {/* hides secret values */}
                     <Button
                       className="button"
-                      onClick={() => this.setState(prevState => ({ hideSecrets: !prevState.hideSecrets }))}
+                      onClick={() =>
+                        this.setState((prevState) => ({
+                          hideSecrets: !prevState.hideSecrets,
+                        }))
+                      }
                       type={Button.TYPE.PRIMARY}
-                      iconType={ hideSecrets ? Button.ICON_TYPE.INTERFACE__OPERATIONS__SHOW : Button.ICON_TYPE.INTERFACE__OPERATIONS__HIDE }
+                      iconType={
+                        hideSecrets
+                          ? Button.ICON_TYPE.INTERFACE__OPERATIONS__SHOW
+                          : Button.ICON_TYPE.INTERFACE__OPERATIONS__HIDE
+                      }
                     >
-                      {hideSecrets ? 'Show Secrets' : 'Hide Secrets'}
+                      {hideSecrets ? "Show Secrets" : "Hide Secrets"}
                     </Button>
                   </Card>
                 </StackItem>
@@ -158,14 +179,22 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                           <UserSecretsQuery name={userSecretsQueryKey}>
                             {({ data, loading }) => {
                               if (loading) {
-                                return <Spinner />
+                                return <Spinner />;
                               }
 
                               if (!data) {
-                                return <h3>Secret not found</h3>
+                                return <h3>Secret not found</h3>;
                               }
 
-                              return <pre>{JSON.stringify(hideSecrets ? hideSecret(data) : data, null, 2)}</pre>
+                              return (
+                                <pre>
+                                  {JSON.stringify(
+                                    hideSecrets ? hideSecret(data) : data,
+                                    null,
+                                    2
+                                  )}
+                                </pre>
+                              );
                             }}
                           </UserSecretsQuery>
                         </div>
@@ -193,10 +222,19 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                             return data.map((secret, index) => {
                               return (
                                 <div key={index}>
-                                  <pre>{JSON.stringify(hideSecrets ? hideSecret(secret) : secret, null, 2)}</pre>
+                                  <pre>
+                                    {JSON.stringify(
+                                      hideSecrets ? hideSecret(secret) : secret,
+                                      null,
+                                      2
+                                    )}
+                                  </pre>
+                                  {/* deletes secrets*/}
                                   <Button
                                     className="button"
-                                    onClick={() => this.deleteSecret(secret.key)}
+                                    onClick={() =>
+                                      this.deleteSecret(secret.key)
+                                    }
                                     type={Button.TYPE.PRIMARY}
                                     iconType={
                                       Button.ICON_TYPE
