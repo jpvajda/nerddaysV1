@@ -18,7 +18,7 @@ import {
 // Community components https://www.npmjs.com/package/@newrelic/nr1-community/v/1.3.0-alpha.5
 import { UserSecretsMutation, UserSecretsQuery } from "@newrelic/nr1-community";
 
-// Utility function for hiding secret value in UI
+// function for hiding secret value in UI
 const hideSecret = (data) => {
   const { value } = data;
 
@@ -43,14 +43,12 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
       // Local component state for storing the values from these input fields.
       secretName: "",
       secretValue: "",
-
-      // Local component state for storing the values from these input fields.
       userSecretsQueryKey: "",
 
       // Control re-querying by updating this when a user takes an action
       requery: Date.now(),
 
-      // Toggle Visibility of secrets
+      // Toggles Visibility of secrets
       hideSecrets: false,
     };
   }
@@ -229,7 +227,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                                       2
                                     )}
                                   </pre>
-                                  {/* deletes secrets*/}
+                                  {/* Deletes secrets*/}
                                   <Button
                                     className="button"
                                     onClick={() =>
