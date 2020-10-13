@@ -22,3 +22,11 @@ nr1 create
 ```
 
 > Example: `nr1 create --type nerdlet --name my-nerdlet`.
+
+## Example App
+
+- Now you can submit a secret
+- Now you can query a secret
+- Now you can retrieve all keys
+
+![App Image](./app.png)
