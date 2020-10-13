@@ -55,6 +55,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
     };
   }
 
+  // delete secret function
   async deleteSecret(key) {
     const mutation = {
       actionType: UserSecretsMutation.ACTION_TYPE.DELETE_SECRET,
@@ -64,12 +65,12 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
     this.setState({ requery: Date.now() });
   }
 
+  // write secret function
   async writeSecret() {
     const { secretName, secretValue } = this.state;
 
-    // Options for the mutate method.
     const mutation = {
-      actionType: UserSecretsMutation.ACTION_TYPE.WRITE_SECRET, // Allows you to toggle WRITE/DELETE.
+      actionType: UserSecretsMutation.ACTION_TYPE.WRITE_SECRET,
       name: secretName,
       value: secretValue,
     };
@@ -106,6 +107,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                   ADD A SECRET
                   <Card>
                     <CardBody>
+                      {/* secret name field */}
                       <TextField
                         autofocus
                         label="Secret Name"
@@ -115,6 +117,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                         }}
                         value={secretName || ""}
                       />
+                      {/* secret value field */}
                       <TextField
                         autofocus
                         label="Secret Value"
@@ -125,7 +128,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                         value={secretValue || ""}
                       />
                     </CardBody>
-                    {/* A function that saves the secret to NerdVault */}
+                    {/* saves the secret to NerdVault */}
                     <Button
                       className="button"
                       onClick={() => this.writeSecret()}
@@ -136,6 +139,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                     >
                       Save
                     </Button>
+                    {/* hides secret values */}
                     <Button
                       className="button"
                       onClick={() =>
@@ -225,6 +229,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                                       2
                                     )}
                                   </pre>
+                                  {/* deletes secrets*/}
                                   <Button
                                     className="button"
                                     onClick={() =>
