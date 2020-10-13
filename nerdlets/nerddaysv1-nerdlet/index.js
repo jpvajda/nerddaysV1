@@ -147,6 +147,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                             return (
                               <>
                                 <pre>{JSON.stringify(secret, null, 2)}</pre>
+                                {/* Deletes a secret*/}
                                 <Button
                                   className="button"
                                   onClick={() => this.deleteSecret(secret.key)}
