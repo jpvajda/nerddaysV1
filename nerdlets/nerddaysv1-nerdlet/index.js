@@ -16,6 +16,7 @@ import {
   StackItem,
 } from "nr1";
 import { UserSecretsMutation, UserSecretsQuery } from "@newrelic/nr1-community";
+//
 
 export default class Nerddaysv1NerdletNerdlet extends React.Component {
   constructor(props) {
@@ -148,7 +149,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                                 <pre>{JSON.stringify(secret, null, 2)}</pre>
                                 <Button
                                   className="button"
-                                  onClick={() => this.deleteSecret(secret.name)}
+                                  onClick={() => this.deleteSecret(secret.key)}
                                   type={Button.TYPE.PRIMARY}
                                 >
                                   Delete
