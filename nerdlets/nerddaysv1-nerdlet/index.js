@@ -1,6 +1,5 @@
 // SAMPLE APP REPO: https://github.com/jpvajda/nerddaysV1
 // PRE-REQ: https://github.com/newrelic-experimental/nerd-days-v1/tree/main/open-source-track/third-party-secrets
-// add in additional comments to align with UI elements.
 import React from "react";
 
 import {
@@ -16,7 +15,8 @@ import {
   StackItem,
 } from "nr1";
 import { UserSecretsMutation, UserSecretsQuery } from "@newrelic/nr1-community";
-//
+
+//Community components https://www.npmjs.com/package/@newrelic/nr1-community/v/1.3.0-alpha.5
 
 export default class Nerddaysv1NerdletNerdlet extends React.Component {
   constructor(props) {
@@ -151,6 +151,10 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                                   className="button"
                                   onClick={() => this.deleteSecret(secret.key)}
                                   type={Button.TYPE.PRIMARY}
+                                  iconType={
+                                    Button.ICON_TYPE
+                                      .INTERFACE__SIGN__EXCLAMATION__V_ALTERNATE
+                                  }
                                 >
                                   Delete
                                 </Button>
