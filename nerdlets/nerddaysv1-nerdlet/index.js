@@ -21,17 +21,20 @@ import { UserSecretsMutation, UserSecretsQuery } from "@newrelic/nr1-community";
 // Utility function for hiding secret value in UI
 const hideSecret = (data) => {
   const { value } = data;
-                            
-  const lengthVisible = value.length >= 7 ? 5 : (value.length - 2);
+
+  const lengthVisible = value.length >= 7 ? 5 : value.length - 2;
   const replacementLength = value.length - lengthVisible;
-  const regex = new RegExp('^.{' + replacementLength + '}', 'g');
-  const replacementValue = value.replace(regex, Array(replacementLength).join('*'));
+  const regex = new RegExp("^.{" + replacementLength + "}", "g");
+  const replacementValue = value.replace(
+    regex,
+    Array(replacementLength).join("*")
+  );
 
   return {
     ...data,
-    value: replacementValue
+    value: replacementValue,
   };
-}
+};
 
 export default class Nerddaysv1NerdletNerdlet extends React.Component {
   constructor(props) {
@@ -48,7 +51,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
       requery: Date.now(),
 
       // Toggle Visibility of secrets
-      hideSecrets: false
+      hideSecrets: false,
     };
   }
 
@@ -79,7 +82,13 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
   }
 
   render() {
-    const { hideSecrets, secretName, secretValue, requery, userSecretsQueryKey } = this.state;
+    const {
+      hideSecrets,
+      secretName,
+      secretValue,
+      requery,
+      userSecretsQueryKey,
+    } = this.state;
 
     return (
       // A Set of components containing the application functionality.
@@ -104,7 +113,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                         onChange={({ target }) => {
                           this.setState({ secretName: target.value });
                         }}
-                        value={secretName || ''}
+                        value={secretName || ""}
                       />
                       <TextField
                         autofocus
@@ -113,7 +122,7 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                         onChange={({ target }) => {
                           this.setState({ secretValue: target.value });
                         }}
-                        value={secretValue || ''}
+                        value={secretValue || ""}
                       />
                     </CardBody>
                     {/* A function that saves the secret to NerdVault */}
@@ -129,11 +138,19 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                     </Button>
                     <Button
                       className="button"
-                      onClick={() => this.setState(prevState => ({ hideSecrets: !prevState.hideSecrets }))}
+                      onClick={() =>
+                        this.setState((prevState) => ({
+                          hideSecrets: !prevState.hideSecrets,
+                        }))
+                      }
                       type={Button.TYPE.PRIMARY}
-                      iconType={ hideSecrets ? Button.ICON_TYPE.INTERFACE__OPERATIONS__SHOW : Button.ICON_TYPE.INTERFACE__OPERATIONS__HIDE }
+                      iconType={
+                        hideSecrets
+                          ? Button.ICON_TYPE.INTERFACE__OPERATIONS__SHOW
+                          : Button.ICON_TYPE.INTERFACE__OPERATIONS__HIDE
+                      }
                     >
-                      {hideSecrets ? 'Show Secrets' : 'Hide Secrets'}
+                      {hideSecrets ? "Show Secrets" : "Hide Secrets"}
                     </Button>
                   </Card>
                 </StackItem>
@@ -158,14 +175,22 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                           <UserSecretsQuery name={userSecretsQueryKey}>
                             {({ data, loading }) => {
                               if (loading) {
-                                return <Spinner />
+                                return <Spinner />;
                               }
 
                               if (!data) {
-                                return <h3>Secret not found</h3>
+                                return <h3>Secret not found</h3>;
                               }
 
-                              return <pre>{JSON.stringify(hideSecrets ? hideSecret(data) : data, null, 2)}</pre>
+                              return (
+                                <pre>
+                                  {JSON.stringify(
+                                    hideSecrets ? hideSecret(data) : data,
+                                    null,
+                                    2
+                                  )}
+                                </pre>
+                              );
                             }}
                           </UserSecretsQuery>
                         </div>
@@ -179,43 +204,6 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                   FETCH ALL
                   <Card>
                     <CardBody>
-<<<<<<< HEAD
-                      <UserSecretsQuery>
-                        {({ data, loading }) => {
-                          if (loading) {
-                            return <Spinner />;
-                          }
-
-                          return data.map((secret) => {
-                            return (
-                              <>
-                                <pre>{JSON.stringify(secret, null, 2)}</pre>
-                                {/* Deletes a secret*/}
-                                <Button
-                                  className="button"
-                                  onClick={() => this.deleteSecret(secret.key)}
-                                  type={Button.TYPE.PRIMARY}
-                                  iconType={
-                                    Button.ICON_TYPE
-                                      .INTERFACE__SIGN__EXCLAMATION__V_ALTERNATE
-                                  }
-                                >
-                                  Delete
-                                </Button>
-                              </>
-                            );
-                          });
-                        }}
-                      </UserSecretsQuery>
-                      <Button
-                        className="button"
-                        onClick={() => this.setState()}
-                        type={Button.TYPE.PRIMARY}
-                        iconType={Button.ICON_TYPE.INTERFACE__OPERATIONS__UNDO}
-                      >
-                        Refresh
-                      </Button>
-=======
                       <div key={requery}>
                         <UserSecretsQuery>
                           {({ data, loading }) => {
@@ -230,10 +218,18 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                             return data.map((secret, index) => {
                               return (
                                 <div key={index}>
-                                  <pre>{JSON.stringify(hideSecrets ? hideSecret(secret) : secret, null, 2)}</pre>
+                                  <pre>
+                                    {JSON.stringify(
+                                      hideSecrets ? hideSecret(secret) : secret,
+                                      null,
+                                      2
+                                    )}
+                                  </pre>
                                   <Button
                                     className="button"
-                                    onClick={() => this.deleteSecret(secret.key)}
+                                    onClick={() =>
+                                      this.deleteSecret(secret.key)
+                                    }
                                     type={Button.TYPE.PRIMARY}
                                     iconType={
                                       Button.ICON_TYPE
@@ -248,7 +244,6 @@ export default class Nerddaysv1NerdletNerdlet extends React.Component {
                           }}
                         </UserSecretsQuery>
                       </div>
->>>>>>> 211ae63d4e75afdf9d1a40447c0ae2b3b4176c6e
                     </CardBody>
                   </Card>
                 </StackItem>
